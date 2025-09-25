@@ -1,17 +1,22 @@
 {
-  "name": "roblox-scout",
+  "name": "roblox-scout-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend server for Roblox Scout",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "node-fetch": "^3.3.2"
-  }
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "ISC"
 }
+
