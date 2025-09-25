@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Roblox Scout 🎮</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>🎮 Roblox Scout</h1>
+    <nav>
+      <a href="index.html" class="active">🏠 Home</a>
+      <a href="about.html">ℹ️ About</a>
+      <a href="contact.html">📩 Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="hero card">
+      <h2>✨ Welcome to Roblox Scout ✨</h2>
+      <p>Search a Roblox username to see public profile info, favorite games, created games, and inventory.</p>
+
+      <div class="search-box">
+        <input id="username" placeholder="Enter Roblox username..." />
+        <button id="searchBtn">🔎 Search</button>
+      </div>
+
+      <div id="loading" class="hidden">⏳ Loading <span class="dot"></span></div>
+
+      <div id="result"></div>
+    </section>
+  </div>
+
+  <footer>Made with ❤️ for Roblox players</footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

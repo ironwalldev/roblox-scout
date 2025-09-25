@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages | Roblox Scout</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Roblox Scout 🎮</h1>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="about.html">ℹ️ About</a>
+      <a href="contact.html">📩 Contact</a>
+      <a href="messages.html" class="active">📨 Messages</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>📨 Inbox</h2>
+      <div id="messages"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Made with ❤️ for Roblox players 🎮</p>
+  </footer>
+
+  <script>
+    async function loadMessages() {
+      const res = await fetch("http://localhost:3000/messages");
+      const data = await res.json();
+      const box = document.getElementById("messages");
+
+      if (data.length === 0) {
+        box.innerHTML = "<p>No messages yet 📭</p>";
+        return;
+      }
+
+      box.innerHTML = data.map(m => `
+        <div class="card">
+          <p><strong>👤 ${m.name}</strong> (${m.email})</p>
+          <p>💬 ${m.message}</p>
+          <p><small>📅 ${new Date(m.date).toLocaleString()}</small></p>
+        </div>
+      `).join("");
+    }
+
+    loadMessages();
+  </script>
+</body>
+</html>

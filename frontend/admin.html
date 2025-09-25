@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Login | Roblox Scout</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>🔒 Admin — Roblox Scout</h1>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="contact.html">📩 Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="card admin-box">
+      <h2>Admin Login</h2>
+      <p>Enter your admin username & password.</p>
+
+      <form id="loginForm" class="contact-form">
+        <input id="admUser" placeholder="username" />
+        <input id="admPass" type="password" placeholder="password" />
+        <button type="submit">Login</button>
+      </form>
+
+      <p id="loginMsg" style="margin-top:10px;"></p>
+    </section>
+  </div>
+
+  <footer>Made with ❤️ for Roblox players</footer>
+
+  <script>
+    const API = "http://localhost:3000";
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const user = document.getElementById("admUser").value;
+      const pass = document.getElementById("admPass").value;
+      const msg = document.getElementById("loginMsg");
+      try {
+        const r = await fetch(API + "/admin/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: user, password: pass }) });
+        const data = await r.json();
+        if (r.ok && data.token) {
+          localStorage.setItem("adminToken", data.token);
+          window.location.href = "dashboard.html";
+        } else {
+          msg.textContent = data.error || "Login failed";
+          msg.style.color = "red";
+        }
+      } catch (err) {
+        console.error(err);
+        msg.textContent = "Server error";
+        msg.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Roblox Scout - Favorites</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>🎮 Roblox Scout</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="games.html">Games</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Player Favorite Games ⭐</h2>
+      <p>Enter a Roblox username to see their favorite games.</p>
+    </section>
+
+    <section class="search-box">
+      <input id="username" placeholder="Enter Roblox username">
+      <button onclick="searchFavorites()">Search Favorites</button>
+      <div id="loading" class="hidden">⏳ Loading...</div>
+    </section>
+
+    <section id="favorites-list" class="grid"></section>
+  </main>
+
+  <footer>
+    <p>Made with ❤️ for Roblox players</p>
+  </footer>
+
+  <script src="favorites.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard | Roblox Scout</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>📬 Admin Dashboard</h1>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="contact.html">📩 Contact</a>
+      <a id="logoutBtn" href="#">🔓 Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="card">
+      <h2>Inbox</h2>
+      <div id="inbox">Loading messages...</div>
+    </section>
+  </div>
+
+  <footer>Made with ❤️ for Roblox players</footer>
+
+  <script>
+    const API = "http://localhost:3000";
+    const token = localStorage.getItem("adminToken");
+    if (!token) { alert("Not logged in"); window.location.href = "admin.html"; }
+
+    async function loadMessages() {
+      try {
+        const r = await fetch(API + "/admin/messages", { headers: { "Authorization": "Bearer " + token }});
+        if (r.status === 401) { alert("Session expired"); localStorage.removeItem("adminToken"); window.location.href = "admin.html"; return; }
+        const msgs = await r.json();
+        const container = document.getElementById("inbox");
+        if (!msgs || msgs.length === 0) { container.innerHTML = "<p>No messages</p>"; return; }
+
+        container.innerHTML = msgs.map(m => `
+          <div class="message-card">
+            <p><strong>${m.name}</strong> <small>(${m.email})</small></p>
+            <p>${m.message}</p>
+            <p><small>${new Date(m.date).toLocaleString()}</small></p>
+            <button data-id="${m.id}" class="delBtn">Delete</button>
+          </div>
+        `).join("");
+
+        document.querySelectorAll(".delBtn").forEach(b => b.addEventListener("click", async (e) => {
+          const id = e.target.dataset.id;
+          if (!confirm("Delete this message?")) return;
+          const dr = await fetch(API + "/admin/messages/" + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token }});
+          if (dr.ok) loadMessages();
+          else alert("Failed");
+        }));
+      } catch (err) {
+        console.error(err);
+        document.getElementById("inbox").innerHTML = "<p>Failed to load messages</p>";
+      }
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("adminToken");
+      window.location.href = "admin.html";
+    });
+
+    loadMessages();
+  </script>
+</body>
+</html>
